@@ -6,7 +6,7 @@ signal data_recieved(payload)
 
 const IPCPayload = preload("./IPCPayload.gd")
 const IPCPipe: Script = preload("./pipe/IPCPipe.gd")
-const UnixPipe: Script = preload("./pipe/UnixPipe.gd")
+# const UnixPipe: Script = preload("./pipe/UnixPipe.gd")
 const WindowsPipe: Script = preload("./pipe/WindowsPipe.gd")
 
 var _pipe: IPCPipe
@@ -93,8 +93,8 @@ static func get_pipe() -> IPCPipe:
 	match OS.get_name():
 		"Windows":
 			pipe = WindowsPipe.new()
-		"Server", "X11", "OSX":
-			pipe = UnixPipe.new()
+		# "Server", "X11", "OSX":
+		# 	pipe = UnixPipe.new()
 	return pipe
 
 static func get_pipe_path(index: int) -> String:
@@ -102,13 +102,13 @@ static func get_pipe_path(index: int) -> String:
 	match OS.get_name():
 		"Windows":
 			path = "\\\\?\\pipe\\"
-		"Server", "X11", "OSX":
-			for env_var in ["XDG_RUNTIME_DIR","TMPDIR","TMP","TEMP"]:
-				if (OS.has_environment(env_var)):
-					path = OS.get_environment(env_var) + "/"
-					break
-			if path.is_empty():
-				path = "/tmp/"
+		# "Server", "X11", "OSX":
+		# 	for env_var in ["XDG_RUNTIME_DIR","TMPDIR","TMP","TEMP"]:
+		# 		if (OS.has_environment(env_var)):
+		# 			path = OS.get_environment(env_var) + "/"
+		# 			break
+		# 	if path.is_empty():
+		# 		path = "/tmp/"
 		_:
 			return ""
 			
